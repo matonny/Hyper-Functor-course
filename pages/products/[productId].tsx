@@ -40,7 +40,7 @@ export const getStaticPaths = async () => {
     paths: data.map((product)=>{
       return{
         params: {
-          productId: product.id.toString()
+          producId: product.id.toString()
         }
       }
     }),
