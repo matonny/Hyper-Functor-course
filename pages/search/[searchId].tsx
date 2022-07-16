@@ -1,4 +1,6 @@
+import { count } from "console";
 import { InferGetStaticPropsType } from "next";
+import { totalmem } from "os";
 import Pagination from "../../components/Pagination";
 import { ProductListItem } from "../../components/Product";
 
@@ -8,14 +10,14 @@ const productSearchPage = ({
   if (!indexedData) {
     return <div>Nie znaleziono produktu</div>;
   }
-  const { id, products } = indexedData;
+  const { id, products, totalPages } = indexedData;
   if (!products) {
     return <div>Nie znaleziono produktu</div>;
   }
   return (
     <>
       <div>
-        <Pagination maxPages={10} currentPage={id} prerendered={true} />
+        <Pagination maxPages={totalPages} currentPage={id} prerendered={true} />
         <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 max-w-6xl mx-auto">
           {products.map((product) => {
             return (
@@ -48,13 +50,8 @@ export type InferGetStaticPaths<T> = T extends () => Promise<{
   : never;
 
 export const getStaticPaths = async () => {
-  const itemsInApi = await countItemsInAPI();
-  const res = await fetch(
-    "https://naszsklep-api.vercel.app/api/products?take=250&offset=0"
-  );
-  const data: StoreApiResponse[] = await res.json();
-  console.log(data.length);
-  const pages = Array(Math.ceil(data.length / 25))
+  const itemsInApi = await countItemsInApi();
+  const pages = Array(Math.ceil(itemsInApi / 25))
     .fill(0)
     .map((_, index) => index + 1);
   return {
@@ -78,17 +75,12 @@ export const getStaticProps = async ({
       notFound: true,
     };
   }
-  const res = await fetch(
-    `https://naszsklep-api.vercel.app/api/products?take=250&offset=${
-      25 * (+params.searchId - 1)
-    }`
-  );
-
-  const data: StoreApiResponse[] | null = await res.json();
-
+  const data = await getDataFromApi(25 * (+params.searchId - 1), 25);
+  const pagesCount = Math.floor((await countItemsInApi()) / 25);
   const indexedData: searchPage = {
     id: +params.searchId,
-    products: data?.slice((+params.searchId - 1) * 25, +params.searchId * 25),
+    products: data,
+    totalPages: pagesCount,
   };
   return {
     props: {
@@ -97,16 +89,6 @@ export const getStaticProps = async ({
   };
 };
 
-const countItemsInAPI = async () => {
-  let foundEnd = false;
-  let currentLast = 0;
-  while (!foundEnd) {
-    const res = await fetch(
-      `https://naszsklep-api.vercel.app/api/products?take=1&offset=${currentLast}`
-    );
-  }
-  return 2;
-};
 export interface StoreApiResponse {
   id: number;
   title: string;
@@ -122,5 +104,46 @@ export interface StoreApiResponse {
 
 export interface searchPage {
   id: number;
-  products: StoreApiResponse[] | undefined;
+  products: StoreApiResponse[] | null;
+  totalPages: number;
 }
+
+const countItemsInApi = async () => {
+  let previousValue = 0;
+  let maxValue = 0;
+  const stepSize = 1000;
+  let foundUpperLimit = false;
+  while (!foundUpperLimit) {
+    const data = await getDataFromApi(maxValue, 1);
+    if (data === null || data.length === 0) {
+      foundUpperLimit = true;
+    } else {
+      previousValue = maxValue;
+      maxValue += stepSize;
+    }
+  }
+  while (maxValue > previousValue) {
+    const middlePoint = Math.floor(
+      previousValue + (maxValue - previousValue) / 2
+    );
+    const res = await fetch(
+      `https://naszsklep-api.vercel.app/api/products?take=1&offset=${middlePoint}`
+    );
+    const data = await res.json();
+    if (data === null || data.length === 0) {
+      maxValue = middlePoint - 1;
+    } else {
+      previousValue = middlePoint + 1;
+    }
+  }
+  return previousValue;
+};
+
+const getDataFromApi = async (offset: number, count: number) => {
+  const requestUrl = `https://naszsklep-api.vercel.app/api/products?offset=${offset.toString()}&take=${count}`;
+
+  const res = await fetch(requestUrl);
+  const data: StoreApiResponse[] | null = await res.json();
+
+  return data;
+};
