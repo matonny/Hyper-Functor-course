@@ -4,6 +4,8 @@ import { Main } from "../components/Main";
 import { ProductDetails } from "../components/Product";
 
 const DATA = {
+  id: 2,
+  title: "Whatever",
   description:
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam tempus nec dui pulvinar pharetra. Aenean et lacus ut metus sagittis porttitor vel et felis. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Ut porta suscipit est.",
   thumbnailUrl: "https://picsum.photos/id/1060/536/354",

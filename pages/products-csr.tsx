@@ -1,16 +1,27 @@
 import { InferGetStaticPropsType } from "next";
+import { useRouter } from "next/router";
+import { off } from "process";
 import { useQuery } from "react-query";
-import { ProductDetails } from "../components/Product";
+import Pagination from "../components/Pagination";
+import { ProductDetails, ProductListItem } from "../components/Product";
 
-const getProducts = async () => {
-  const res = await fetch("https://fakestoreapi.com/products");
+const getProducts = async (pageNumber: number) => {
+  const pageSize = 25;
+  const offset = pageSize * pageNumber;
+  const address = `https://naszsklep-api.vercel.app/api/products?take=${pageSize}&offset=${offset}`;
+  const res = await fetch(address);
   const data: StoreApiResponse[] = await res.json();
   return data;
 };
 
 const ProductsCSRPage = () => {
-  const { isLoading, data, error } = useQuery("products", getProducts);
+  const router = useRouter();
+  const page = router.query.page ? +router.query.page : 1;
 
+  // const { isLoading, data, error } = useQuery("products", () => page ? getProducts(page) : getProducts(0));
+  const { isLoading, data, error } = useQuery(["products", page], () =>
+    getProducts(page)
+  );
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -19,25 +30,32 @@ const ProductsCSRPage = () => {
   if (!data || error) {
     return <div>Coś poszło nie tak </div>;
   }
-  
+
   return (
-    <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-      {data.map((product) => {
-        return (
-          <li key={product.id} className="shadow-xl border-2">
-            <ProductDetails
-              data={{
-                title: product.title,
-                description: product.description,
-                thumbnailUrl: product.image,
-                thumbnailAlt: product.title,
-                rating: product.rating.rate,
-              }}
-            />
-          </li>
-        );
-      })}
-    </ul>
+    <>
+      <div>
+        <Pagination maxPages={10} currentPage={page} prerendered={false} />
+        <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 max-w-6xl mx-auto">
+          {data.map((product) => {
+            return (
+              <li
+                key={product.id}
+                className=" border-r-12 shadow-xl border-8 border-purple-200 bg-gray-50 h-96"
+              >
+                <ProductListItem
+                  data={{
+                    id: product.id,
+                    title: product.title,
+                    thumbnailUrl: product.image,
+                    thumbnailAlt: product.title,
+                  }}
+                />
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    </>
   );
 };
 
