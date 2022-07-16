@@ -34,11 +34,14 @@ const ProductsCSRPage = () => {
   return (
     <>
       <div>
-        <Pagination maxPages={10} currentPage={page} />
+        <Pagination maxPages={10} currentPage={page} prerendered={false} />
         <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 max-w-6xl mx-auto">
           {data.map((product) => {
             return (
-              <li key={product.id} className=" border-r-12 shadow-xl border-8 border-purple-200 bg-gray-50 h-96">
+              <li
+                key={product.id}
+                className=" border-r-12 shadow-xl border-8 border-purple-200 bg-gray-50 h-96"
+              >
                 <ProductListItem
                   data={{
                     id: product.id,

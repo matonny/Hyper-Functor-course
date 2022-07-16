@@ -3,9 +3,14 @@ import Link from "next/link";
 interface PaginationProps {
   maxPages: number;
   currentPage: number;
+  prerendered: boolean;
 }
 
-export const Pagination = ({ maxPages, currentPage }: PaginationProps) => {
+export const Pagination = ({
+  maxPages,
+  currentPage,
+  prerendered,
+}: PaginationProps) => {
   const values = Array(maxPages)
     .fill(0)
     .map((_, index) => {
@@ -37,7 +42,7 @@ export const Pagination = ({ maxPages, currentPage }: PaginationProps) => {
         {values.map((val) => {
           if (val <= 0) {
             return (
-              <li className="w-8"key={val}>
+              <li className="w-8" key={val}>
                 <span className="border-transparent text-gray-500  border-t-2 pt-4 px-4 inline-flex items-center text-sm font-medium">
                   ...
                 </span>
@@ -45,8 +50,12 @@ export const Pagination = ({ maxPages, currentPage }: PaginationProps) => {
             );
           } else {
             return (
-              <li className="w-8"key={val}>
-                <Link href={"/products-csr?page=" + val}>
+              <li className="w-8" key={val}>
+                <Link
+                  href={
+                    (prerendered ? "/search/" : "/products-csr/?page=") + val
+                  }
+                >
                   <a
                     className={
                       val != currentPage

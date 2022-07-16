@@ -6,9 +6,6 @@ import { ProductDetails } from "../../components/Product";
 const productIdPage = ({
   data,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const router = useRouter();
-
   if (!data) {
     return <div>Nie znaleziono produktu</div>;
   }
@@ -33,16 +30,16 @@ const productIdPage = ({
 export default productIdPage;
 
 export const getStaticPaths = async () => {
-  const res  = await fetch("https://fakestoreapi.com/products/")
+  const res = await fetch("https://fakestoreapi.com/products/");
   const data: StoreApiResponse[] = await res.json();
 
   return {
-    paths: data.map((product)=>{
-      return{
+    paths: data.map((product) => {
+      return {
         params: {
-          producId: product.id.toString()
-        }
-      }
+          productId: product.id.toString(),
+        },
+      };
     }),
     fallback: false,
   };
