@@ -2,6 +2,7 @@ import { GetStaticPropsContext, InferGetStaticPropsType } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { ProductDetails } from "../../components/Product";
+import { countItemsInApi, getDataFromApi } from "../../helpers/apiHelpers";
 
 const productIdPage = ({
   data,
@@ -30,18 +31,20 @@ const productIdPage = ({
 export default productIdPage;
 
 export const getStaticPaths = async () => {
-  const res = await fetch("https://fakestoreapi.com/products/");
-  const data: StoreApiResponse[] = await res.json();
+  const itemsInApi = 10;
+  const pages = Array(itemsInApi)
+    .fill(0)
+    .map((_, index) => index + 1);
 
   return {
-    paths: data.map((product) => {
+    paths: pages.map((product) => {
       return {
         params: {
-          productId: product.id.toString(),
+          productId: product.toString(),
         },
       };
     }),
-    fallback: false,
+    fallback: "blocking",
   };
 };
 export const getStaticProps = async ({
@@ -53,15 +56,13 @@ export const getStaticProps = async ({
       notFound: true,
     };
   }
-  const res = await fetch(
-    `https://fakestoreapi.com/products/${params.productId}`
-  );
-  const data: StoreApiResponse | null = await res.json();
+  const data = (await getDataFromApi(+params.productId - 1, 1))[0];
 
   return {
     props: {
       data,
     },
+    revalidate: 100,
   };
 };
 

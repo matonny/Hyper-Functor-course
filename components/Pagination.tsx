@@ -24,7 +24,6 @@ export const Pagination = ({
       );
     })
     .map((value) => {
-      console.log(value);
       if (
         value != 1 &&
         value != maxPages &&
@@ -35,7 +34,6 @@ export const Pagination = ({
         return value;
       }
     });
-  console.log(values);
   return (
     <nav className="flex border-t border-gray-200 px-4 items-center justify-between sm:px-0">
       <ol className="hidden md:-mt-px md:flex">
