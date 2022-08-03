@@ -3,8 +3,8 @@ const nextConfig = {
   reactStrictMode: true,
   trailingSlash: true,
   images: {
-    domains: ['naszsklep-api.vercel.app', 'fakestoreapi.com']
-  }
-}
+    domains: ["naszsklep-api.vercel.app", "fakestoreapi.com", "picsum.photos"],
+  },
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

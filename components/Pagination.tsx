@@ -35,7 +35,7 @@ export const Pagination = ({
       }
     });
   return (
-    <nav className="flex border-t border-gray-200 px-4 items-center justify-between sm:px-0">
+    <nav className="mx-auto border-t border-gray-200 px-4 sticky">
       <ol className="hidden md:-mt-px md:flex">
         {values.map((val) => {
           if (val <= 0) {
