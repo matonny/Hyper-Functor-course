@@ -44,14 +44,14 @@ const productSearchPage = ({
     );
   }
   return (
-    <div>
+    <div className="flex flex-col justify-center">
       <Pagination maxPages={totalPages} currentPage={id} prerendered={true} />
-      <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 max-w-6xl mx-auto">
+      <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 m-3.5">
         {products.map((product) => {
           return (
             <li
               key={product.id}
-              className=" border-r-12 shadow-xl border-8 border-purple-200 bg-gray-50 h-96"
+              className=" border-r-12 shadow-xl border-8 border-purple-200 bg-gray-50"
             >
               <ProductListItem
                 data={{

@@ -15,7 +15,7 @@ const DATA = {
 
 const Home = () => {
   return (
-    <div className="flex flex-col  min-h-screen">
+    <div className="flex flex-col  min-h-screen max-w-full">
       <Header />
       <Main>
         <ProductDetails data={DATA} />
