@@ -23,6 +23,7 @@ const productIdPage = ({
           thumbnailAlt: data.title,
           description: data.description,
           rating: data.rating.rate,
+          longDescription: data.longDescription,
         }}
       />
     </div>
@@ -71,16 +72,3 @@ export type InferGetStaticPaths<T> = T extends () => Promise<{
 }>
   ? { params?: R }
   : never;
-
-export interface StoreApiResponse {
-  id: number;
-  title: string;
-  price: number;
-  description: string;
-  category: string;
-  image: string;
-  rating: {
-    rate: number;
-    count: number;
-  };
-}
