@@ -2,6 +2,7 @@ import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
 import { Main } from "../components/Main";
 import { ProductDetails } from "../components/Product";
+import { Layout } from "../components/Layout";
 
 const DATA = {
   id: 2,
@@ -14,15 +15,7 @@ const DATA = {
 };
 
 const Home = () => {
-  return (
-    <div className="flex flex-col  min-h-screen max-w-full">
-      <Header />
-      <Main>
-        <ProductDetails data={DATA} />
-      </Main>
-      <Footer />
-    </div>
-  );
+  return <Main>lol</Main>;
 };
 
 export default Home;

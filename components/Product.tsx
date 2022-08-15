@@ -1,6 +1,10 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Rating } from "./Rating";
+import React from "react";
+import { NextSeo } from "next-seo";
+import { ZaisteReactMarkdown } from "./ZaisteReactMarkdown";
+import { MarkdownOutput } from "../helpers";
 
 interface ProductDetails {
   id: number;
@@ -9,6 +13,7 @@ interface ProductDetails {
   thumbnailUrl: string;
   thumbnailAlt: string;
   rating: number;
+  longDescription: MarkdownOutput;
 }
 
 interface ProductProps {
@@ -18,17 +23,45 @@ interface ProductProps {
 export const ProductDetails = ({ data }: ProductProps) => {
   return (
     <>
-      <Image
-        src={data.thumbnailUrl}
-        alt={data.thumbnailAlt}
-        layout="responsive"
-        width={16}
-        height={9}
-        objectFit="contain"
-      />
-      <h2 className="p-4 text-3xl ">{data.title}</h2>
-      <p className="p-4"> {data.description}</p>
-      <Rating rating={data.rating} />
+      <div className="bg-white p-4">
+        <NextSeo
+          title={data.title}
+          description={data.description}
+          canonical={`https://naszsklep.vercel.app/products/${data.id}`}
+          openGraph={{
+            url: `https://naszsklep.vercel.app/products/${data.id}`,
+            title: data.title,
+            description: data.description,
+            images: [
+              {
+                url: data.thumbnailUrl,
+                alt: data.thumbnailAlt,
+                type: "image/jpeg",
+              },
+            ],
+            site_name: "Nasz Sklep",
+          }}
+          twitter={{
+            handle: "@handle",
+            site: "@site",
+            cardType: "summary_large_image",
+          }}
+        />
+        <Image
+          src={data.thumbnailUrl}
+          alt={data.thumbnailAlt}
+          layout="responsive"
+          width={16}
+          height={9}
+          objectFit="contain"
+        />
+        <h2 className="p-4 text-3xl ">{data.title}</h2>
+        <p className="p-4"> {data.description}</p>
+        <article className="p-4 prose lg:prose-xl">
+          <ZaisteReactMarkdown>{data.longDescription}</ZaisteReactMarkdown>
+        </article>
+        <Rating rating={data.rating} />
+      </div>
     </>
   );
 };
