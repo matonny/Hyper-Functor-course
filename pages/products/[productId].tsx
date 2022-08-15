@@ -3,6 +3,8 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { ProductDetails } from "../../components/Product";
 import { countItemsInApi, getDataFromApi } from "../../helpers/apiHelpers";
+import { serialize } from "next-mdx-remote/serialize";
+import { MDXRemote } from "next-mdx-remote";
 
 const productIdPage = ({
   data,
@@ -61,7 +63,10 @@ export const getStaticProps = async ({
 
   return {
     props: {
-      data,
+      data: {
+        ...data,
+        longDescription: await serialize(data.longDescription),
+      },
     },
     revalidate: 100,
   };
