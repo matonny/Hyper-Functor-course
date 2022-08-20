@@ -1,6 +1,5 @@
 import { MDXRemote } from "next-mdx-remote";
 import Link from "next/link";
-import { tmpdir } from "os";
 import { MarkdownOutput } from "../helpers";
 
 export const ZaisteReactMarkdown = ({
