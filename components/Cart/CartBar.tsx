@@ -1,11 +1,5 @@
 import Link from "next/link";
-import { useContext, useState } from "react";
 import { useCartState } from "./CartContext";
-
-interface CartItem {
-  price: number;
-  title: string;
-}
 
 export const CartBar = () => {
   const cartState = useCartState();
