@@ -12,5 +12,3 @@ export interface CartState {
 }
 
 export type updateType = "Add" | "Remove";
-
-export const storageTitle = "ZAISTE_SHOPPING_CART";

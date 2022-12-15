@@ -1,4 +1,6 @@
-import { CartItem, storageTitle, updateType } from "./CartTypes";
+import { CartItem, updateType } from "./CartTypes";
+
+export const storageTitle = "ZAISTE_SHOPPING_CART";
 
 export const getCartItemsFromStorage = () => {
   const itemsFromLocalStorage = localStorage.getItem(storageTitle);
@@ -17,13 +19,13 @@ export const getCartItemsFromStorage = () => {
 const updateItemCount = (
   items: CartItem[],
   id: CartItem["id"],
-  change: updateType
+  update: updateType
 ) => {
   return items.map((existingItem) => {
     if (existingItem.id === id) {
       return {
         ...existingItem,
-        count: existingItem.count + (change === "Add" ? 1 : -1),
+        count: existingItem.count + (update === "Add" ? 1 : -1),
       };
     }
     return existingItem;
@@ -36,7 +38,6 @@ export const setCartItemsInStorage = (cartItems: CartItem[]) => {
 
 export const addItemToGivenCart = (cartItems: CartItem[], item: CartItem) => {
   const existingItem = cartItems.find((el) => el.id === item.id);
-  const increaseValue = 1;
   if (!existingItem) {
     return [...cartItems, item];
   }
@@ -45,7 +46,6 @@ export const addItemToGivenCart = (cartItems: CartItem[], item: CartItem) => {
 
 export const removeItemFromGivenCart = (cartItems: CartItem[], id: number) => {
   const existingItem = cartItems.find((el) => el.id === id);
-  const decreaseValue = 1;
   if (existingItem && existingItem.count === 1) {
     return cartItems.filter((existingItem) => existingItem.id !== id);
   }
