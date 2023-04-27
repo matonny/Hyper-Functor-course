@@ -5,6 +5,14 @@ import { ProductDetails } from "../../components/Product";
 import { countItemsInApi, getDataFromApi } from "../../helpers/apiHelpers";
 import { serialize } from "next-mdx-remote/serialize";
 import { MDXRemote } from "next-mdx-remote";
+import { apolloClient } from "../../graphql/apolloClient";
+import {
+  GetProductDetailsBySlugDocument,
+  GetProductDetailsBySlugQuery,
+  GetProductDetailsBySlugQueryVariables,
+  GetProductsSlugsDocument,
+  GetProductsSlugsQuery,
+} from "../../generated/graphql";
 
 const productIdPage = ({
   data,
@@ -19,12 +27,12 @@ const productIdPage = ({
       </Link>
       <ProductDetails
         data={{
-          id: data.id,
-          title: data.title,
-          thumbnailUrl: data.image,
-          thumbnailAlt: data.title,
+          id: data.slug,
+          title: data.name,
+          thumbnailUrl: data.images[0].url,
+          thumbnailAlt: data.name,
           description: data.description,
-          rating: data.rating.rate,
+          rating: 5,
           longDescription: data.longDescription,
         }}
       />
@@ -34,16 +42,14 @@ const productIdPage = ({
 export default productIdPage;
 
 export const getStaticPaths = async () => {
-  const itemsInApi = 10;
-  const pages = Array(itemsInApi)
-    .fill(0)
-    .map((_, index) => index + 1);
-
+  const { data } = await apolloClient.query<GetProductsSlugsQuery>({
+    query: GetProductsSlugsDocument,
+  });
   return {
-    paths: pages.map((product) => {
+    paths: data.products.map((product) => {
       return {
         params: {
-          productId: product.toString(),
+          productId: product.slug,
         },
       };
     }),
@@ -59,13 +65,26 @@ export const getStaticProps = async ({
       notFound: true,
     };
   }
-  const data = (await getDataFromApi(+params.productId - 1, 1))[0];
-
+  const { data } = await apolloClient.query<
+    GetProductDetailsBySlugQuery,
+    GetProductDetailsBySlugQueryVariables
+  >({
+    variables: {
+      slug: params.productId,
+    },
+    query: GetProductDetailsBySlugDocument,
+  });
+  if (!data || !data.product) {
+    return {
+      props: {},
+      notFound: true,
+    };
+  }
   return {
     props: {
       data: {
-        ...data,
-        longDescription: await serialize(data.longDescription),
+        ...data.product,
+        longDescription: await serialize(data.product.description),
       },
     },
     revalidate: 100,

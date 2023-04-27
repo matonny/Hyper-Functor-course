@@ -5,7 +5,7 @@ import {
   gql,
 } from "@apollo/client";
 
-const client = new ApolloClient({
-  uri: "https://api-eu-west-2.hygraph.com/v2/cl73cyrz03boo01ul17p8gm5a/master",
+export const apolloClient = new ApolloClient({
+  uri: "https://api-eu-west-2.hygraph.com/v2/clgzcpv5j2r9t01t8crs99ja1/master",
   cache: new InMemoryCache(),
 });
