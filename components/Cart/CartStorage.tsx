@@ -44,7 +44,7 @@ export const addItemToGivenCart = (cartItems: CartItem[], item: CartItem) => {
   return updateItemCount(cartItems, item.id, "Add");
 };
 
-export const removeItemFromGivenCart = (cartItems: CartItem[], id: number) => {
+export const removeItemFromGivenCart = (cartItems: CartItem[], id: string) => {
   const existingItem = cartItems.find((el) => el.id === id);
   if (existingItem && existingItem.count === 1) {
     return cartItems.filter((existingItem) => existingItem.id !== id);
