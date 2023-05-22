@@ -61,7 +61,7 @@ const ProductsCSRPage = () => {
 
 export default ProductsCSRPage;
 export interface StoreApiResponse {
-  id: number;
+  id: string;
   title: string;
   price: number;
   description: string;
