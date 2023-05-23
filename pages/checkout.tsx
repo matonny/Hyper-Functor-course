@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { Main } from "../components/Main";
 
-interface CheckoutFormData {
+export interface CheckoutFormData {
   firstName: string;
   lastName: string;
   email: string;
