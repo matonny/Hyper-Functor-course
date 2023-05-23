@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form";
 import { Main } from "../components/Main";
+import { CheckoutAddressForm } from "../components/Form/CheckoutAddressForm";
 
 export interface CheckoutFormData {
   firstName: string;
@@ -90,6 +91,7 @@ const CheckoutPage = () => {
             </div>
           </div>
         </div>
+        <CheckoutAddressForm></CheckoutAddressForm>
       </div>
     </Main>
   );
