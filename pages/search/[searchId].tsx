@@ -7,7 +7,7 @@ import { ProductListItem } from "../../components/Product";
 import { countItemsInApi, getDataFromApi } from "../../helpers/apiHelpers";
 
 export interface StoreApiResponse {
-  id: number;
+  id: string;
   title: string;
   price: number;
   description: string;
