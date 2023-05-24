@@ -1,4 +1,4 @@
-import { object, string, number, InferType } from "yup";
+import { object, string, number, InferType, setLocale } from "yup";
 
 export interface CheckoutFormData {
   firstName: string;
@@ -10,6 +10,16 @@ export interface CheckoutFormData {
   cardCvc: string;
   postalCode: string;
 }
+setLocale({
+  mixed: {
+    default: "Pole ${path} niepoprawne",
+    required: "Pole ${path} wymagane",
+    notType: "Pole ${path} niepoprawne",
+  },
+  string: {
+    email: "Adres e-mail niepoprawny",
+  },
+});
 
 export const addressSchema = object({
   firstName: string().required(),
