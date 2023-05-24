@@ -44,6 +44,7 @@ const ProductsCSRPage = () => {
               >
                 <ProductListItem
                   data={{
+                    price: product.price,
                     id: product.id,
                     title: product.title,
                     thumbnailUrl: product.image,

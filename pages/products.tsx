@@ -19,6 +19,7 @@ const ProductsPage = ({
           <li key={product.slug} className="shadow-xl border-2">
             <ProductListItem
               data={{
+                price: product.price,
                 id: product.slug,
                 title: product.name,
                 thumbnailUrl: product.images[0].url,

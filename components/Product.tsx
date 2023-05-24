@@ -9,6 +9,7 @@ import { useCartState } from "./Cart/CartContext";
 
 interface ProductDetails {
   id: string;
+  price: number;
   title: string;
   description: string;
   thumbnailUrl: string;
@@ -69,7 +70,7 @@ export const ProductDetails = ({ data }: ProductProps) => {
 
 type ProductListItem = Pick<
   ProductDetails,
-  "id" | "title" | "thumbnailUrl" | "thumbnailAlt"
+  "id" | "title" | "thumbnailUrl" | "thumbnailAlt" | "price"
 >;
 
 interface ProductListItemProps {
@@ -98,7 +99,7 @@ export const ProductListItem = ({ data }: ProductListItemProps) => {
         <button
           onClick={() =>
             cartState.addItemToCart({
-              price: 21.37,
+              price: data.price,
               title: data.title,
               count: 1,
               id: data.id,

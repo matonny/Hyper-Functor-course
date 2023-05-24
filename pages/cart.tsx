@@ -12,7 +12,7 @@ const CartContent = () => {
                 {item.count} x {item.title}
               </div>
               <div className="flex items-center">
-                {item.price}
+                {item.price / 100}
                 <button
                   onClick={() => cartState.removeItemFromCart(item.id)}
                   className="ml-4 text-red-500"

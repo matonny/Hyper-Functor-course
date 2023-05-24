@@ -27,6 +27,7 @@ const productIdPage = ({
       </Link>
       <ProductDetails
         data={{
+          price: data.price,
           id: data.slug,
           title: data.name,
           thumbnailUrl: data.images[0].url,
