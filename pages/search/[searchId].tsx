@@ -1,9 +1,7 @@
-import { count } from "console";
 import { InferGetStaticPropsType } from "next";
 import Link from "next/link";
-import { totalmem } from "os";
 import Pagination from "../../components/Pagination";
-import { ProductListItem } from "../../components/Product";
+import { ProductListItem } from "../../components/Product/ProductListItem";
 import { countItemsInApi, getDataFromApi } from "../../helpers/apiHelpers";
 
 export interface StoreApiResponse {

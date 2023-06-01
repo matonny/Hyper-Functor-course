@@ -1,10 +1,7 @@
-import { GetStaticPropsContext, InferGetStaticPropsType } from "next";
+import { InferGetStaticPropsType } from "next";
 import Link from "next/link";
-import { useRouter } from "next/router";
-import { ProductDetails } from "../../components/Product";
-import { countItemsInApi, getDataFromApi } from "../../helpers/apiHelpers";
+import { ProductDetails } from "../../components/Product/ProductDetails";
 import { serialize } from "next-mdx-remote/serialize";
-import { MDXRemote } from "next-mdx-remote";
 import { apolloClient } from "../../graphql/apolloClient";
 import {
   GetProductDetailsBySlugDocument,
