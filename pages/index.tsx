@@ -3,6 +3,14 @@ import { Footer } from "../components/Footer";
 import { Main } from "../components/Main";
 import { ProductDetails } from "../components/Product";
 import { Layout } from "../components/Layout";
+import { apolloClient } from "../graphql/apolloClient";
+import {
+  CreateProductReviewDocument,
+  CreateProductReviewMutation,
+  CreateProductReviewMutationVariables,
+  GetProductsSlugsQueryVariables,
+  useCreateProductReviewMutation,
+} from "../generated/graphql";
 
 const DATA = {
   id: 2,
@@ -15,7 +23,31 @@ const DATA = {
 };
 
 const Home = () => {
-  return <Main>lol</Main>;
+  const [createReview, createReviewResult] = useCreateProductReviewMutation({
+    client: apolloClient,
+  });
+  const addReview = () => {
+    createReview({
+      mutation: CreateProductReviewDocument,
+      variables: {
+        review: {
+          headline: "Test review",
+          name: "Mateusz",
+          email: "siema@mati.com",
+          content: "Bardzo dobry produkt",
+          rating: 5,
+        },
+      },
+    });
+  };
+  return (
+    <Main>
+      <button onClick={addReview} type="button">
+        Dodaj komentarz
+      </button>
+      <pre>{JSON.stringify(createReviewResult.data, null, 2)}</pre>
+    </Main>
+  );
 };
 
 export default Home;
