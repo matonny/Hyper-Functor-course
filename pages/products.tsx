@@ -1,6 +1,6 @@
 import { InferGetStaticPropsType } from "next";
 import { Layout } from "../components/Layout";
-import { ProductListItem } from "../components/Product";
+import { ProductListItem } from "../components/Product/ProductListItem";
 import { apolloClient } from "../graphql/apolloClient";
 import { gql } from "@apollo/client";
 import {

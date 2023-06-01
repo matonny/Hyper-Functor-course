@@ -1,7 +1,7 @@
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
 import { Main } from "../components/Main";
-import { ProductDetails } from "../components/Product";
+import { ProductDetails } from "../components/Product/ProductDetails";
 import { Layout } from "../components/Layout";
 import { apolloClient } from "../graphql/apolloClient";
 import {

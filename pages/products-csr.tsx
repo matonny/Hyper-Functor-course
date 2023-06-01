@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { off } from "process";
 import { useQuery } from "react-query";
 import Pagination from "../components/Pagination";
-import { ProductDetails, ProductListItem } from "../components/Product";
+import { ProductListItem } from "../components/Product/ProductListItem";
 
 const getProducts = async (pageNumber: number) => {
   const pageSize = 25;
