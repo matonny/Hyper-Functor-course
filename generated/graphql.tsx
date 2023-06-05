@@ -6449,8 +6449,11 @@ export enum ProductOrderByInput {
 }
 
 export enum ProductSize {
+  L = 'L',
   Large = 'LARGE',
+  M = 'M',
   Medium = 'MEDIUM',
+  S = 'S',
   Small = 'SMALL',
   Xl = 'XL',
   Xs = 'XS'

@@ -1,6 +1,4 @@
-import { InferGetStaticPropsType } from "next";
 import { useRouter } from "next/router";
-import { off } from "process";
 import { useQuery } from "react-query";
 import Pagination from "../components/Pagination";
 import { ProductListItem } from "../components/Product/ProductListItem";

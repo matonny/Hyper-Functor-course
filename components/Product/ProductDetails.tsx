@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { NextSeo } from "next-seo";
 import { ZaisteReactMarkdown } from "../ZaisteReactMarkdown";
-import { Rating } from "../Rating";
+import { Rating } from "../Rating/Rating";
 import { ProductProps } from "./ProductTypes";
 import { AddProductToCartButton } from "./AddProductToCartButton";
 
@@ -41,20 +41,25 @@ export const ProductDetails = ({ data }: ProductProps) => {
           objectFit="contain"
         />
       </div>
-      <div className="grid-cols-1">
-        <h2 className="p-4 text-3xl uppercase ">{data.title}</h2>
-        <p className="p-4"> {data.description}</p>
-        <article className="p-4 prose lg:prose-xl">
+      <div className="p-4 grid-cols-1">
+        <h2 className="text-3xl my-6 uppercase ">{data.title}</h2>
+        <p className="text-4xl my-6">{`${data.price / 100} $`}</p>
+        <Rating
+          rating={data.rating}
+          unfilledColor="#777777"
+          filledColor="#333333"
+        />
+        <p className=" text-xl text-gray-500 m6-4"> {data.description}</p>
+        <article className="my-6 prose lg:prose-l">
           <ZaisteReactMarkdown>{data.longDescription}</ZaisteReactMarkdown>
         </article>
-        <Rating rating={data.rating} />
+        <AddProductToCartButton
+          price={data.price}
+          title={data.title}
+          count={1}
+          id={data.id}
+        />
       </div>
-      <AddProductToCartButton
-        price={data.price}
-        title={data.title}
-        count={1}
-        id={data.id}
-      />
     </div>
   );
 };

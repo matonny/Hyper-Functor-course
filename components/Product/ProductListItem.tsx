@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { useCartState } from "../Cart/CartContext";
 import { ProductListItemProps } from "./ProductTypes";
 import Link from "next/link";
 import { AddProductToCartButton } from "./AddProductToCartButton";

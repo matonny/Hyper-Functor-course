@@ -6,7 +6,7 @@ export const AddProductToCartButton = (product: CartItem) => {
   return (
     <button
       onClick={() => cartState.addItemToCart(product)}
-      className="p-3 bg-gray-200"
+      className="p-3 bg-gray-200 w-full"
     >
       Dodaj do koszyka
     </button>
