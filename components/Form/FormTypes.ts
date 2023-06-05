@@ -25,7 +25,15 @@ export const addressSchema = object({
   firstName: string().required(),
   lastName: string().required(),
   email: string().email().required(),
-  phone: number().required(),
+  phone: string().required(),
+  cardNumber: string().required().length(16),
+  cardExpiry: string()
+    .matches(/[0-9]{2}\/[0-9]{2}/)
+    .required(),
+  cardCvc: string().required().length(3),
+  postalCode: string()
+    .required()
+    .matches(/(([0-9]|[A-Z]){2,3})[ -]\1/),
 }).required();
 
-export type addressFormData = InferType<typeof addressSchema>;
+export type AddressFormData = InferType<typeof addressSchema>;

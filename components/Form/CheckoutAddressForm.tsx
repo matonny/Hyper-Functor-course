@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { CheckoutFormData, addressSchema } from "./FormTypes";
+import { AddressFormData, addressSchema } from "./FormTypes";
 import { FormInput } from "./FormInput";
 import { yupResolver } from "@hookform/resolvers/yup";
 
@@ -8,7 +8,7 @@ export const CheckoutAddressForm = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<CheckoutFormData>({
+  } = useForm<AddressFormData>({
     mode: "onSubmit",
     reValidateMode: "onBlur",
     resolver: yupResolver(addressSchema),
@@ -16,7 +16,7 @@ export const CheckoutAddressForm = () => {
 
   const onSubmit = handleSubmit((data) => console.log(data));
   const inputsData: {
-    name: keyof CheckoutFormData;
+    name: keyof AddressFormData;
     label: string;
     placeholder: string;
   }[] = [
@@ -37,7 +37,7 @@ export const CheckoutAddressForm = () => {
           {inputsData.map((input) => {
             return (
               <div className="col-span-6" key={input.name}>
-                <FormInput<CheckoutFormData>
+                <FormInput<AddressFormData>
                   name={input.name}
                   label={input.label}
                   error={errors[input.name]?.message}
