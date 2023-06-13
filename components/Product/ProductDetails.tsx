@@ -4,6 +4,7 @@ import { ZaisteReactMarkdown } from "../ZaisteReactMarkdown";
 import { Rating } from "../Rating/Rating";
 import { ProductProps } from "./ProductTypes";
 import { AddProductToCartButton } from "./AddProductToCartButton";
+import { ReviewForm } from "../Form/ReviewForm";
 
 export const ProductDetails = ({ data }: ProductProps) => {
   return (
@@ -60,6 +61,7 @@ export const ProductDetails = ({ data }: ProductProps) => {
           id={data.id}
         />
       </div>
+      <ReviewForm productSlug={data.id} />
     </div>
   );
 };

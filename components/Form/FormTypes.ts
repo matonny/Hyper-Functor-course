@@ -1,15 +1,11 @@
 import { object, string, number, InferType, setLocale } from "yup";
 
-export interface CheckoutFormData {
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  cardNumber: string;
-  cardExpiry: string;
-  cardCvc: string;
-  postalCode: string;
+export interface InputCreationData<TFormInputs> {
+  name: keyof TFormInputs;
+  label: string;
+  placeholder: string;
 }
+
 setLocale({
   mixed: {
     default: "Pole ${path} niepoprawne",
@@ -37,3 +33,13 @@ export const addressSchema = object({
 }).required();
 
 export type AddressFormData = InferType<typeof addressSchema>;
+
+export const reviewSchema = object({
+  headline: string().required(),
+  name: string().required(),
+  email: string().email().required(),
+  rating: number().required().lessThan(6).moreThan(0),
+  content: string(),
+});
+
+export type ReviewFormData = InferType<typeof reviewSchema>;
