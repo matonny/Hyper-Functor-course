@@ -35,6 +35,7 @@ export const ReviewForm = ({ productSlug }: ReviewFormProps) => {
     register,
     handleSubmit,
     formState: { errors },
+    control,
   } = useForm<ReviewFormData>({
     mode: "onSubmit",
     reValidateMode: "onBlur",
@@ -44,11 +45,19 @@ export const ReviewForm = ({ productSlug }: ReviewFormProps) => {
     console.log(data.rating);
   };
   return (
-    <form onSubmit={handleSubmit(onSubmit, (data) => console.log(data.rating))}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <FormInput {...reviewInitialData.name} register={register} />
       <FormInput {...reviewInitialData.headline} register={register} />
-      <RatingInput name="rating" register={register} />
       <FormInput {...reviewInitialData.email} register={register} />
+      <Controller
+        name="rating"
+        control={control}
+        render={({ field }) => (
+          <RatingInput value={field.value} onChange={field.onChange} />
+        )}
+      />
+      <FormInput {...reviewInitialData.content} register={register} textarea />
+      <button type="submit">Dodaj komentarz</button>
     </form>
   );
 };

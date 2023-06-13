@@ -1,28 +1,26 @@
-import { useState } from "react";
 import { Star } from "./Star";
-import { FieldValues, Path, UseFormRegister } from "react-hook-form";
+import { FieldValues, Path } from "react-hook-form";
 
 interface RatingInputProps<TFormData extends FieldValues> {
-  name: Path<TFormData>;
-  register: UseFormRegister<TFormData>;
+  value: number;
+  onChange: (...event: any[]) => void;
 }
 type Rating = 1 | 2 | 3 | 4 | 5;
 export const RatingInput = <TFormData extends FieldValues>({
-  name,
-  register,
+  value,
+  onChange,
 }: RatingInputProps<TFormData>) => {
-  const [rating, setRating] = useState<0 | Rating>(0);
   const ratings: Rating[] = [1, 2, 3, 4, 5];
   return (
     <div>
-      <input type="number" value={rating} {...register(name)} />
+      <input type="number" className="hidden" />
 
-      <ol>
+      <ol className="flex flex-row">
         {ratings.map((currRating) => {
           return (
-            <li>
-              <button onClick={() => setRating(currRating)}>
-                <Star color={currRating <= rating ? "#333333" : "#777777"} />
+            <li key={currRating}>
+              <button type="button" onClick={() => onChange(currRating)}>
+                <Star color={currRating <= value ? "#333333" : "#777777"} />
               </button>
             </li>
           );
